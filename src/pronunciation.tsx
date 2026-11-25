@@ -1,3 +1,4 @@
+import { wordMeaning } from './wordMeaning';
 import { useRef, useState } from 'react';
 import { Volume2 } from 'lucide-react';
 import { speak } from './platform';
@@ -43,18 +44,29 @@ export function ReadAloud() {
 
 const wordParts = /([A-Za-z]+(?:[’'-][A-Za-z]+)*)/;
 
-export function PronounceText({ text, play, disabled = false }: {
+export function PronounceText({ text, play, disabled = false, chinese, showTranslation = false }: {
   text: string;
   play: (text: string) => void;
   disabled?: boolean;
+  chinese?: string;
+  showTranslation?: boolean;
 }) {
-  return text.split(wordParts).map((part, index) => {
-    if (index % 2 === 0) return part;
-    return (
+  const [selected, setSelected] = useState<number>();
+  const parts = text.split(wordParts);
+  const meaning = selected === undefined || !chinese ? undefined : wordMeaning(text, (selected - 1) / 2, chinese);
+  const offset = meaning?.matched ? chinese!.indexOf(meaning.meaning) : -1;
+  return <>
+    {parts.map((part, index) => index % 2 === 0 ? part : (
       <button key={index} type="button" lang="en" className="pronounce-word"
-        disabled={disabled} aria-label={`朗读单词 ${part}`} onClick={() => play(part)}>
-        {part}
-      </button>
-    );
-  });
+        data-selected={index === selected} disabled={disabled} aria-label={`朗读单词 ${part}`}
+        onClick={() => { setSelected(index); play(part); }} onBlur={() => setSelected(undefined)}>{part}</button>
+    ))}
+    {chinese && (showTranslation || meaning) && <small className="translation" lang="zh-CN" aria-live="polite">
+      {showTranslation && (offset >= 0 && meaning
+        ? <>{chinese.slice(0, offset)}<mark>{meaning.meaning}</mark>{chinese.slice(offset + meaning.meaning.length)}</>
+        : chinese)}
+      {meaning && (!showTranslation || !meaning.matched) &&
+        <span className="word-gloss">{parts[selected!]} · <mark>{meaning.meaning}</mark></span>}
+    </small>}
+  </>;
 }

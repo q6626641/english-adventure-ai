@@ -94,3 +94,23 @@ test('FSRS orders due cards, replays legacy attempts and moves a corrected card 
   assert.equal(+schedule[0].card.last_review!, start);
   assert.equal(+reviewSchedule([legacy], lessons)[0].card.last_review!, Date.parse('2026-11-22T00:00:00'));
 });
+import { wordMeaning } from '../src/wordMeaning.ts';
+
+test('word taps align vocabulary and idioms with their sentence translation', () => {
+  assert.deepEqual(wordMeaning('Could I have a latte, please?', 4, '请给我一杯拿铁。'), { meaning: '拿铁', matched: true });
+  assert.deepEqual(wordMeaning('For here or to go?', 4, '在这里喝还是外带？'), { meaning: '外带', matched: true });
+  assert.deepEqual(wordMeaning('The samples arrive on Monday.', 0, '样品星期一到达。'), { meaning: '定冠词', matched: false });
+  for (const lesson of lessons) {
+    const pairs = [...lesson.phrases];
+    for (const exercise of lesson.exercises) {
+      for (const text of [exercise.prompt, exercise.answer, ...('options' in exercise ? exercise.options : [])]) {
+        const chinese = translatePracticeText(text);
+        if (chinese) pairs.push([text, chinese]);
+      }
+    }
+    for (const [english, chinese] of pairs) {
+      const words = english.match(/[A-Za-z]+(?:[’'-][A-Za-z]+)*/g) ?? [];
+      words.forEach((word, index) => assert.ok(wordMeaning(english, index, chinese), word));
+    }
+  }
+});

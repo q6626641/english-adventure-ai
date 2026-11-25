@@ -310,3 +310,11 @@ progress { accent-color: #6b42cd; }
   transition: none !important;
   animation: none !important;
 }
+.pronounce-word[data-selected="true"], .translation mark {
+  color: #401786;
+  background: #ffe18a;
+  font-weight: 800;
+  border-radius: 4px;
+}
+.translation mark { padding: 0 2px; }
+.word-gloss { display: block; font-size: 14px; color: #482970; }

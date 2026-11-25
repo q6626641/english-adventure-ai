@@ -281,7 +281,7 @@ function App() {
                       <span className="lesson-icon"><Icon size={23} /></span>
                     </button>
                     <span className="lesson-copy"><small>{lesson.title} · {types[item.kind].label}</small>
-                      <strong><PronounceText text={item.prompt} play={pagePronunciation.play} /></strong>
+                      <strong><PronounceText text={item.prompt} chinese={translatePracticeText(item.prompt)} play={pagePronunciation.play} /></strong>
                     </span>
                     <ChevronRight className="card-arrow" size={20} />
                   </div>
@@ -341,8 +341,7 @@ function PhraseList({ phrases, showTranslation, play }: {
     <ul className="phrases">
       {phrases.map(([english, chinese]) => (
         <li key={english}>
-          <span><strong lang="en"><PronounceText text={english} play={play} /></strong>
-            {showTranslation && <small className="translation">{chinese}</small>}
+          <span><strong lang="en"><PronounceText text={english} play={play} chinese={chinese} showTranslation={showTranslation} /></strong>
           </span>
           <button type="button" className="icon-button" aria-label={`朗读整句 ${english}`} onClick={() => play(english)}>
             <Volume2 size={20} />
@@ -383,10 +382,8 @@ function Practice({ session, exercise, answer, setAnswer, showCorrection, correc
     return shuffled;
   });
   const Icon = types[exercise.kind].icon;
-  const translation = (text: string) => {
-    const chinese = showTranslation && translatePracticeText(text);
-    return chinese ? <small className="translation">{chinese}</small> : null;
-  };
+  const bilingual = (text: string) => <PronounceText text={text} play={play} disabled={recording}
+    chinese={translatePracticeText(text)} showTranslation={showTranslation} />;
   const audio = exercise.kind === 'speak' ? exercise.answer : 'audio' in exercise ? exercise.audio : undefined;
 
   async function recognize() {
@@ -413,11 +410,11 @@ function Practice({ session, exercise, answer, setAnswer, showCorrection, correc
       <progress aria-label="练习进度" value={session.position + 1} max={session.queue.length} />
       {correctFeedback && <div role="status" className="answer-success"><Check size={16} /> 上一题答对了</div>}
       <TranslationToggle checked={showTranslation} onChange={setShowTranslation} />
-      <h1><PronounceText text={exercise.prompt} play={play} disabled={recording} /></h1>
-      {translation(exercise.prompt)}
+      <h1>{bilingual(exercise.prompt)}</h1>
+
       {exercise.kind === 'speak' && <div className="spoken-example">
-        <p className="spoken" lang="en"><PronounceText text={exercise.answer} play={play} disabled={recording} /></p>
-        {translation(exercise.answer)}
+        <p className="spoken" lang="en">{bilingual(exercise.answer)}</p>
+
       </div>}
       {audio && <button className="secondary-button" disabled={recording} onClick={() => play(audio)}><Volume2 size={19} /> 播放英文</button>}
       {exercise.kind === 'speak' && (recording
@@ -432,7 +429,7 @@ function Practice({ session, exercise, answer, setAnswer, showCorrection, correc
               <div key={item} className="option" data-selected={item === answer} data-correct={showCorrection && item === exercise.answer}>
                 <button type="button" className="option-pick" lang="en" aria-label={item} aria-pressed={item === answer}
                   disabled={saving || showCorrection} onClick={() => setAnswer(item)} />
-                <span><span lang="en"><PronounceText text={item} play={play} /></span>{translation(item)}</span>
+                <span lang="en">{bilingual(item)}</span>
               </div>
             ))}
           </div>
@@ -446,7 +443,7 @@ function Practice({ session, exercise, answer, setAnswer, showCorrection, correc
         {showCorrection && <m.div role="status" className="feedback wrong"
           initial={{ scale: .98 }} animate={{ scale: 1 }} transition={{ duration: .16 }}>
           <X size={19} />
-          <span>参考答案 <strong lang="en"><PronounceText text={exercise.answer} play={play} /></strong>{translation(exercise.answer)}</span>
+          <span>参考答案 <strong lang="en">{bilingual(exercise.answer)}</strong></span>
         </m.div>}
         {showCorrection ? (
           <div className="lesson-actions">
