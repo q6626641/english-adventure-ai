@@ -7,7 +7,7 @@ export type Exercise =
 export type Lesson = {
   id: string;
   title: string;
-  category: '日常口语' | '外贸英语' | '英语语法' | '综合实战';
+  category: '日常口语' | '外贸英语' | '英语语法' | '综合实战' | '网站英语';
   description: string;
   phrases: [string, string][];
   exercises: Exercise[];

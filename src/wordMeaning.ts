@@ -1,6 +1,26 @@
 // Alternatives are checked against the course's own sentence translation.
 const glossary = new Map<string, string[]>();
 for (const line of `a 一个/一份/一杯/一件/一张/不定冠词
+settings 设置
+language 语言
+save 保存
+changes 更改
+network 网络
+status 状态
+connect,connection 连接
+disconnect 断开连接
+services 服务
+run 执行
+query 查询
+results 结果
+rules 规则
+view 查看
+logs 日志
+filter 筛选
+records 记录
+test 测试
+passed 通过
+retry 重试
 absorbent 吸水性/吸水
 address 地址
 after 后

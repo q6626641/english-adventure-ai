@@ -54,6 +54,21 @@ const scenes: Scene[] = [
   { id: 'delay-call', category: '综合实战', title: '实战 · 通知交货延期', task: '向买家解释延期，给出新日期并确认是否接受。',
     phrases: [['The shipment has been delayed.', '这批货物延迟了。'], ['We can ship next Thursday.', '我们可以下星期四发货。'], ['Would that date work for you?', '这个日期您方便吗？']],
     choice: ['给出新日期后，怎么确认买家是否接受？', ['Would that date work for you?', '这个日期您方便吗？'], ['Could you confirm your address?', '请确认您的地址好吗？'], ['Have you received our invoice?', '您收到我们的发票了吗？']], spelling: ['shipment', '这批货；发货'] },
+  { id: 'web-settings', category: '网站英语', title: '设置与保存', task: '更改语言前，先找到设置和保存按钮。',
+    phrases: [["Settings","设置"],["Language","语言"],["Save changes","保存更改"]],
+    choice: ["想调整网站偏好，应该打开哪个菜单？",["Settings","设置"],["Language","语言"],["Save changes","保存更改"]], spelling: ["settings","设置（复数菜单名）"] },
+  { id: 'web-network', category: '网站英语', title: '网络状态与连接', task: '查看网络状态，识别连接和断开连接两个操作。',
+    phrases: [["Network status","网络状态"],["Connect","连接"],["Disconnect","断开连接"]],
+    choice: ["要查看当前网络是否在线，应选哪一项？",["Network status","网络状态"],["Connect","连接"],["Disconnect","断开连接"]], spelling: ["connect","连接（动词）"] },
+  { id: 'web-query', category: '网站英语', title: '服务与查询', task: '从服务列表找到查询入口，再读懂查询结果。',
+    phrases: [["Services","服务"],["Run query","执行查询"],["Query results","查询结果"]],
+    choice: ["在哪个菜单可以查看可用服务？",["Services","服务"],["Run query","执行查询"],["Query results","查询结果"]], spelling: ["query","查询"] },
+  { id: 'web-rules', category: '网站英语', title: '规则与日志', task: '分清管理规则、查看日志和筛选记录的入口。',
+    phrases: [["Rules","规则"],["View logs","查看日志"],["Filter records","筛选记录"]],
+    choice: ["想修改一条已有规则，先进入哪个菜单？",["Rules","规则"],["View logs","查看日志"],["Filter records","筛选记录"]], spelling: ["logs","日志（复数）"] },
+  { id: 'web-test', category: '网站英语', title: '连接测试与重试', task: '运行连接测试，读懂结果，找到重试按钮。',
+    phrases: [["Test connection","测试连接"],["Test passed","测试通过"],["Retry","重试"]],
+    choice: ["要检查连接能否正常工作，选哪个按钮？",["Test connection","测试连接"],["Test passed","测试通过"],["Retry","重试"]], spelling: ["test","测试"] },
 ];
 
 export const sceneLessons: (Lesson & { translations: Phrase[] })[] = scenes.map((scene) => {

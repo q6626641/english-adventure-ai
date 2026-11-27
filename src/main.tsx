@@ -25,7 +25,7 @@ const screens = [
   { id: 'progress', label: '成就', icon: Trophy },
   { id: 'settings', label: '设置', icon: Settings },
 ] as const;
-const categories = ['全部', '日常口语', '外贸英语', '英语语法', '综合实战'] as const;
+const categories = ['全部', '日常口语', '外贸英语', '英语语法', '综合实战', '网站英语'] as const;
 const types = {
   choice: { label: '选择题', icon: BookOpen },
   listen: { label: '听力练习', icon: Headphones },

@@ -58,10 +58,10 @@ test('resuming prefers a recently practiced unfinished lesson and keeps previous
   assert.equal(nextLessonToPractice(lessons, attempts, new Map())?.id, undefined);
 });
 
-test('all 30 distinct lessons appear once on their matching map route', () => {
+test('all 35 distinct lessons appear once on their matching map route', () => {
   const ids = worlds.flatMap(({ lessons: entries }) => [...entries]);
-  assert.equal(lessons.length, 30);
-  assert.equal(new Set(lessons.map(({ title }) => title)).size, 30);
+  assert.equal(lessons.length, 35);
+  assert.equal(new Set(lessons.map(({ title }) => title)).size, 35);
   assert.equal(ids.length, new Set(ids).size);
   assert.deepEqual(new Set(ids), new Set(lessons.map(({ id }) => id)));
   for (const world of worlds) {

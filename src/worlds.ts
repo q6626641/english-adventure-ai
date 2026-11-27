@@ -7,6 +7,7 @@ export const worlds = [
   { id: 'port', name: '全球贸易港', category: '外贸英语', theme: 'sky', landmark: [48, 49, 88, 89], lessons: ['packing', 'documents', 'shipping', 'quality'] },
   { id: 'academy', name: '语法学院', category: '英语语法', theme: 'violet', landmark: [52, 53, 84, 85], lessons: ['present', 'past', 'modal-can', 'prepositions', 'much-many', 'comparatives', 'present-perfect'] },
   { id: 'arena', name: '实战竞技场', category: '综合实战', theme: 'lime', landmark: [52, 53, 85, 84], lessons: ['hotel-change', 'delay-call'] },
+  { id: 'web', name: '网站操作站', category: '网站英语', theme: 'sky', landmark: [48, 49, 88, 89], lessons: ["web-settings","web-network","web-query","web-rules","web-test"] },
 ] as const;
 
 export type World = typeof worlds[number];
